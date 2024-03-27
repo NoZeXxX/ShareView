@@ -1,0 +1,14 @@
+{
+    "include": [
+        "src/**/*.ts"
+    ],
+    "compilerOptions": {
+        "module": "CommonJS",
+        "target": "ES6",
+        "outDir": "./dist",
+        "sourceMap": true,
+        "baseUrl": "sahreview",
+        "esModuleInterop": true,
+        "noImplicitAny": false
+    }
+}
