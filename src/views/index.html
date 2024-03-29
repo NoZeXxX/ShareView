@@ -2,10 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UI-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <script src="https:/unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <title>ShareView</title>
 </head>
 <body>
-  
+  <div id="app">
+    <video :src="videoURL" controls autoplay></video>
+    <hr />
+    <input v-model="searchTerm" placeholder="Поиск фильма" type="search"/>
+    <button @click="findMovie">Найти</button>
+    <ul>
+      <li v-for="file in files" :key="file.magnet">
+        {{ file.title }}
+        <button @click="play(file)">Play</button>
+      </li>
+    </ul>
+  </div>
+
 </body>
+<script>
+  const { createApp } = Vue
+
+  createApp({
+    data() {
+      return {
+        searchTerm: '',
+        activeVideo: {},
+        files: [],
+      }
+    },
+    computed: {
+      videoUrl: ({ activeVideo }) => activeVideo.fileName ? `/stream/${activeVideo.magnet}/${activeVideo.fileName}` : ''
+    },
+    methods: {
+      async play(file) {
+        const response = await axios.get(`/stream/add/${file.magnet}`)
+        this.activeVideo = file
+      },
+      async findMovie() {
+        const response = await axios.get(`/movies/search?searchTerm=${this.searchTerm}`)
+        this.files = response.data
+      }
+    }
+  }).mount('#app')
+</script>
 </html>

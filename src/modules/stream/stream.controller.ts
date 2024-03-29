@@ -21,11 +21,6 @@ client.on('error', (err: Error) =>{
 
 client.on('torrent', () => {
     console.log(client.progress)
-    // state = {
-    //     progress: Math.round(client.progress * 100 * 100) / 100,
-    //     downloadSpeed: client.downloadSpeed,
-    //     ratio: client.ratio 
-    // }
 })
 
 router.get('/add/:magnet', (req, res) => {
