@@ -4,14 +4,15 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UI-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:;base64,=">
   <script src="https:/unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
   <title>ShareView</title>
 </head>
+
 <body>
   <div id="app">
-    <video :src="videoURL" controls autoplay></video>
+    <video :src="videoUrl" controls autoplay></video>
     <hr />
     <input v-model="searchTerm" placeholder="Поиск фильма" type="search"/>
     <button @click="findMovie">Найти</button>
@@ -40,8 +41,12 @@
     },
     methods: {
       async play(file) {
-        const response = await axios.get(`/stream/add/${file.magnet}`)
-        this.activeVideo = file
+        const { data } = await axios.get(`/stream/add/${file.magnet}`)
+        console.log(data)
+        this.activeVideo = {
+          magnet: file.magnet,
+          fileName: data[0].name
+        }
       },
       async findMovie() {
         const response = await axios.get(`/movies/search?searchTerm=${this.searchTerm}`)

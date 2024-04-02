@@ -32,7 +32,7 @@ router.get('/search', async ({ query: { searchTerm } }: SearchRequest, res) => {
             }
         })
         .filter(item => item.title)
-        res.status(200).send(results)//searchResult.data)
+        res.status(200).send(results)
     } catch (err) {
         res.status(400).send(err)
     }
