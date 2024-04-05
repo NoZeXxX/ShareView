@@ -3,7 +3,6 @@ import * as cheerio from 'cheerio'
 import axios from 'axios'
 import { SearchRequest } from './movies.interfaces'
 import { parse } from 'qs'
-// import { contents } from 'cheerio/lib/api/traversing'
 
 
 const router = Router()
