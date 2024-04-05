@@ -14,8 +14,8 @@
   <div id="app">
     <video :src="videoUrl" controls autoplay></video>
     <hr />
-    <input v-model="searchTerm" placeholder="Поиск фильма" type="search"/>
-    <button @click="findMovie">Найти</button>
+    <input v-model="searchTerm" placeholder="Movie search" type="search">
+    <button @click="findMovie">Find</button>
     <ul>
       <li v-for="file in files" :key="file.magnet">
         {{ file.title }}
@@ -23,6 +23,7 @@
       </li>
     </ul>
   </div>
+
 
 </body>
 <script>
@@ -33,11 +34,12 @@
       return {
         searchTerm: '',
         activeVideo: {},
-        files: [],
+        files:[]
       }
     },
     computed: {
-      videoUrl: ({ activeVideo }) => activeVideo.fileName ? `/stream/${activeVideo.magnet}/${activeVideo.fileName}` : ''
+      videoUrl: ({ activeVideo }) =>
+         activeVideo.fileName ? `/stream/${activeVideo.magnet}/${activeVideo.fileName}` : ''
     },
     methods: {
       async play(file) {

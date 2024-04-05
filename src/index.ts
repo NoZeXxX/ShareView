@@ -8,13 +8,13 @@ import streamRouter from './modules/stream/stream.controller'
 import contentRouter from './modules/content/content.controller'
 import moviesRouter from './modules/movies/movies.controller'
 
-
+//middleware
 const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(logger('dev'))
 
-
+// endpoints
 app.use('/stream', streamRouter)
 app.use('/content', contentRouter)
 app.use('/movies', moviesRouter)

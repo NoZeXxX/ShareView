@@ -3,7 +3,7 @@ import * as cheerio from 'cheerio'
 import axios from 'axios'
 import { SearchRequest } from './movies.interfaces'
 import { parse } from 'qs'
-import { contents } from 'cheerio/lib/api/traversing'
+// import { contents } from 'cheerio/lib/api/traversing'
 
 
 const router = Router()
@@ -22,8 +22,8 @@ router.get('/search', async ({ query: { searchTerm } }: SearchRequest, res) => {
         const results = data.map(item => {
             const [title, magnetTag] = $(item).find('a').toArray()
             const magnetLink = $(magnetTag).attr('href');
-            const parsedMAgnetLink = parse(magnetLink)
-            const magnet = String(parsedMAgnetLink[MAGNET_KEY]).replace(SPLIT_MAGNET_STRING, '');
+            const parsedMagnetLink = parse(magnetLink)
+            const magnet = String(parsedMagnetLink[MAGNET_KEY]).replace(SPLIT_MAGNET_STRING, '');
 
             return {
                 magnet,
