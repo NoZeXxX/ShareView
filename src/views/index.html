@@ -3,15 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios@1.7.7/dist/axios.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Video Player</title>
   </head>
 
   <body>
     <div id="app">
-      <video src="" controls autoplay></video>
-      <h2>{{ message }}</h2>
+      <video :src="videoUrl" controls autoplay></video>
+      <ul>
+        <li v-for="file in files" :key="file.magnet">
+          {{file.fileName}}
+          <button @click="play(file)">Play</button>
+        </li>
+      </ul>
     </div>
   </body>
 
@@ -21,7 +28,28 @@
     createApp({
       data() {
         return {
-          message: 'Hello Vue!'
+          activeVideo: {},
+          files: [
+            {
+              magnet: 'A59606C81201DD27CBA039A2BF63413C8659C6FF',
+              fileName: 'Shrek.the.Third.2007.1080p.BluRay.DDP.7.1.x265-EDGE2020.mkv'
+            },
+            {
+              magnet: '',
+              fileName: ''
+            }
+          ]
+          // message: 'Hello Vue!'
+        }
+      },
+      computed: {
+        videoUrl: ({ activeVideo }) =>
+          activeVideo.fileName ? `/stream/${activeVideo.magnet}/${activeVideo.fileName}` : ''
+      },
+      methods: {
+        async play(file) {
+          const response = await axios.get(`/stream/add/${file.magnet}`)
+          this.activeVideo = file
         }
       }
     }).mount('#app')
